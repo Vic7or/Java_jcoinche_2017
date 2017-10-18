@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Jcoinche.iml" filepath="$PROJECT_DIR$/.idea/modules/Jcoinche.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Jcoinche_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Jcoinche_main.iml" group="Jcoinche" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Jcoinche_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Jcoinche_test.iml" group="Jcoinche" />
+    </modules>
+  </component>
+</project>
