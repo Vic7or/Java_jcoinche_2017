@@ -4,6 +4,10 @@
     <bytecodeTargetLevel>
       <module name="Jcoinche_main" target="1.8" />
       <module name="Jcoinche_test" target="1.8" />
+      <module name="JcoincheClient_main" target="1.8" />
+      <module name="JcoincheClient_test" target="1.8" />
+      <module name="JcoincheServer_main" target="1.8" />
+      <module name="JcoincheServer_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
