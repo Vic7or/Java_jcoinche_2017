@@ -3,10 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Jcoinche.iml" filepath="$PROJECT_DIR$/.idea/modules/Jcoinche.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/JcoincheClient.iml" filepath="$PROJECT_DIR$/.idea/modules/JcoincheClient.iml" group="JcoincheClient" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/JcoincheClient/JcoincheClient_main.iml" filepath="$PROJECT_DIR$/.idea/modules/JcoincheClient/JcoincheClient_main.iml" group="JcoincheClient" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/JcoincheClient/JcoincheClient_test.iml" filepath="$PROJECT_DIR$/.idea/modules/JcoincheClient/JcoincheClient_test.iml" group="JcoincheClient" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/JcoincheServer.iml" filepath="$PROJECT_DIR$/.idea/modules/JcoincheServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/JcoincheServer_main.iml" filepath="$PROJECT_DIR$/.idea/modules/JcoincheServer_main.iml" group="JcoincheServer" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/JcoincheServer_test.iml" filepath="$PROJECT_DIR$/.idea/modules/JcoincheServer_test.iml" group="JcoincheServer" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Jcoinche_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Jcoinche_main.iml" group="Jcoinche" />
