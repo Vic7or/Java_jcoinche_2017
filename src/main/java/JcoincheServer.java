@@ -27,16 +27,16 @@ public class JcoincheServer {
         }
     }
 
-    private static class Client extends Connection {
+    private static class JClient extends Connection {
         public String   name;
         public int      points;
     }
     private final static Server         kryonet = new Server() {
         @Override
         protected Connection newConnection(){
-            return new Client();
+            return new JClient();
     }};
-    private final static List<Client>   clientList = new ArrayList<Client>();
+    private final static List<JClient>   clientList = new ArrayList<JClient>();
     private final static GameManager    gameManager = GameManager.getInstance();
     public static JcoincheServer getInstance() {
         return ServerHolder.instance;
@@ -52,12 +52,12 @@ public class JcoincheServer {
             @Override
             public void connected(Connection connection) {
                 if (JcoincheServer.clientList.size() < 4) {
-                    System.out.println("new client connected ! =)");
-                    JcoincheServer.clientList.add((Client) connection);
-                    JcoincheServer.kryonet.sendToAllTCP("Waiting for players: " + String.valueOf(JcoincheServer.clientList.size()) + "/4...");
+                    JcoincheServer.clientList.add((JClient) connection);
+                    JcoincheServer.kryonet.sendToTCP(connection.getID(), new Packet(Network.Protocol.ASKNAME, null));
+                    JcoincheServer.kryonet.sendToAllTCP(new Packet(Network.Protocol.WAITFORPLAYERS, String.valueOf(JcoincheServer.clientList.size()) + "/4"));
                     if (JcoincheServer.clientList.size() == 4)
                     {
-                        JcoincheServer.kryonet.sendToAllTCP("Everyone is ready, the game starts!");
+                        JcoincheServer.kryonet.sendToAllTCP(new Packet(Network.Protocol.READY, null));
                         JcoincheServer.gameManager.start();
                     }
                 }
@@ -73,19 +73,44 @@ public class JcoincheServer {
                 {
                     System.out.println(object);
                 }
+                else if (object instanceof Packet)
+                {
+                    Packet packet = (Packet)object;
+                    switch (packet.getType())
+                    {
+                        case NAME:
+                            JClient c;
+                            for (ListIterator<JClient> it = clientList.listIterator(); it.hasNext();)
+                            {
+                                if ((c = it.next()).getID() == connection.getID()) {
+                                    c.name = (String) packet.getData();
+                                    System.out.println("new client registered : "+ c.name);
+                                }
+                            }
+                            break;
+                        default:
+                            System.out.println("Error: protocol unknows - command ignored.");
+                            break;
+                    }
+                }
             }
             @Override
             public void disconnected(Connection connection){
-                System.out.println("Someone has left !");
-                for (ListIterator<Client> it = clientList.listIterator(); it.hasNext();)
+                JClient c;
+                for (ListIterator<JClient> it = clientList.listIterator(); it.hasNext();)
                 {
-                    if (it.next().getID() == connection.getID())
-                       it.remove();
+                    if ((c = it.next()).getID() == connection.getID())
+                    {
+                        it.remove();
+                        System.out.println(c.name + " has left !");
+                        if (JcoincheServer.clientList.size() > 1)
+                        {
+                            JcoincheServer.kryonet.sendToAllTCP(new Packet(Network.Protocol.LEAVER,c.name+" has left - Waiting for players: "+ clientList.size() +"/4..."));
+                        }
+                    }
                 }
                 if (JcoincheServer.clientList.size() == 0)
                     JcoincheServer.kryonet.stop();
-                else if (JcoincheServer.clientList.size() < 4)
-                    JcoincheServer.kryonet.sendToAllTCP("Someone has Disconnected - Waiting for all players: " + String.valueOf(JcoincheServer.clientList.size()) + "/4...");
             }
         });
     }

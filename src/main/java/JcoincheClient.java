@@ -10,14 +10,25 @@ public class JcoincheClient {
     private static class ClientHolder {
         private final static JcoincheClient instance = new JcoincheClient();
     }
-    final static Client kryonet = new Client();
-    private String      buffer;
+    final static Client         kryonet = new Client();
+    private static String       name;
     public static JcoincheClient getInstance() {
         return ClientHolder.instance;
     }
     private JcoincheClient() {
+        this.name = null;
         System.out.println("JcoincheClient instantiated.");
     }
+    private void registerPlayer() throws IOException {
+        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+        String s;
+        while (JcoincheClient.name == null)
+        {
+            System.out.println("Welcome to Jcoinche, please type your player name:");
+            if ((s = rd.readLine()) != null && s.length() != 0)
+                JcoincheClient.name = s;
+        }
+    };
     public void run() throws IOException {
         JcoincheClient.kryonet.start();
         Network.register(JcoincheClient.kryonet);
@@ -32,15 +43,55 @@ public class JcoincheClient {
                 {
                     System.out.println(object);
                 }
+                else if (object instanceof Packet)
+                {
+                    Packet packet = (Packet)object;
+                    switch (packet.getType())
+                    {
+                        case ASKNAME:
+                            JcoincheClient.kryonet.sendTCP(new Packet(Network.Protocol.NAME, JcoincheClient.name));
+                            break;
+                        case WAITFORPLAYERS:
+                            System.out.println(packet.getTypeWhat() + packet.getData());
+                            break;
+                        case REJECTCLIENT:
+                            System.out.println(packet.getTypeWhat());
+                            break;
+                        case LEAVER:
+                            System.out.println(packet.getTypeWhat() + packet.getData());
+                            break;
+                        case READY:
+                            System.out.println(packet.getTypeWhat());
+                            break;
+                        case NEWTURN:
+                            break;
+                        case ENDTURN:
+                            break;
+                        case ASKGAMBLE:
+                            break;
+                        case ASKPLAYCARD:
+                            break;
+                        case CARDPLAYED:
+                            break;
+                        default:
+                            System.out.println("Error: protocol unknows - command ignored.");
+                            break;
+                    }
+                }
             }
             @Override
             public void disconnected(Connection connection){
                 System.out.println("Disconnected from server :( .");
             }
         });
-        JcoincheClient.kryonet.connect(5000, Network.ServerIP, Network.ServerPort);
+
         BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
         String s;
+
+        registerPlayer();
+        System.out.println("Connecting to Jcoinche server...");
+        JcoincheClient.kryonet.connect(5000, Network.ServerIP, Network.ServerPort);
+
         while ((s = rd.readLine()) != null && s.length() != 0)
         {
             JcoincheClient.kryonet.sendTCP(s);

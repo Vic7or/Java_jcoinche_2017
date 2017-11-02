@@ -5,106 +5,36 @@ public class Network {
     public final static int       ServerPort = 4243;
     public final static String    ServerIP = "192.168.1.25";
     public enum Protocol {
-        WAITFORPLAYERS("Waiting for players: ", null){
-            @Override
-            public void print() {
-
-            }
-        },
-        REJECTCLIENT("Your connection has been rejected - Jcoinche server is full.", null) {
-            @Override
-            public void print() {
-
-            }
-        },
-        LEAVER("Someone has left !", null) {
-            @Override
-            public void print() {
-
-            }
-        },
-        READY("Everyone is ready, the game starts!", null) {
-            @Override
-            public void print() {
-
-            }
-        },
-        NEWTURN("\n\n\n------ Your turn begins! ------", null) {
-            @Override
-            public void print() {
-
-            }
-        },
-        ENDTURN("------ Your turn ends ------", null) {
-            @Override
-            public void print() {
-
-            }
-        },
-        ASKGAMBLE("Do you want to raise or fold for this gamble: ", null) {
-            @Override
-            public void print() {
-
-            }
-        },
-        RAISEGAMBLE("You raised the gamble to: ", null) {
-            @Override
-            public void print() {
-
-            }
-        },
-        FOLDGAMBLE("You folded.", null) {
-            @Override
-            public void print() {
-
-            }
-        },
-        ASKPLAYCARD("Which card do you want to play ?", null) {
-            @Override
-            public void print() {
-
-            }
-        },
-        PLAYCARD("You played the card: ", null){
-            @Override
-            public void print(){
-
-            }
-        },
-        CARDPLAYED(" played the card: ", null){
-            @Override
-            public void print() {
-
-            }
-        },
-        WHOISPLAYING(" is playing...", null){
-            @Override
-            public void print() {
-
-            }
-        };
+        ASKNAME("ask_name"), //from server to client
+        NAME("player_name"), // from client to server
+        WAITFORPLAYERS("Waiting for players: "), //from server to all clients
+        REJECTCLIENT("Your connection has been rejected - Jcoinche server is full."), //from server to client
+        LEAVER("Leaver: "), //from server to all clients
+        READY("Everyone is ready, the game starts!"), //from server to all clients
+        NEWTURN("\n\n\n------ Your turn begins! ------"), //from server to client
+        ENDTURN("------ Your turn ends ------"), //from server to client
+        ASKGAMBLE("Do you want to raise or fold for this gamble: "), //from server to client
+        RAISEGAMBLE("You raised the gamble to: "), //from client to server
+        FOLDGAMBLE("You folded."), //from client to server
+        ASKPLAYCARD("Which card do you want to play ?"), //from server to client
+        PLAYCARD("You played the card: "),// from client to server
+        CARDPLAYED(" played the card: "), // from server to all clients except player
+        WHOISPLAYING(" is playing..."),// from server to all clients except player
+        ENDGAME("The game is over, the winner is: "); // from server to all clients
 
         private final String    what;
-        private Object          data;
 
-        Protocol(String id, Object object){
+        Protocol(String id){
             this.what = id;
-            this.data = object;
-        }
-        public void setData(Object object) {
-            this.data = object;
-        }
-        public Object getData() {
-            return this.data;
         }
         public String getWhat() {
             return this.what;
         }
-        public abstract void print();
     }
     public static void register(EndPoint endp) {
         Kryo kryo = endp.getKryo();
         kryo.register(String.class);
         kryo.register(Protocol.class);
+        kryo.register(Packet.class);
     }
 }
