@@ -14,7 +14,6 @@ public class JcoincheServer {
         private static class GMHolder {
             private final static GameManager instance = new GameManager();
         }
-
         public static GameManager getInstance() {
             return GMHolder.instance;
         }
