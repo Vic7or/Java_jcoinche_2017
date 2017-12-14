@@ -81,6 +81,7 @@ public class JcoincheClient {
             }
             @Override
             public void disconnected(Connection connection){
+                JcoincheClient.kryonet.stop();
                 System.out.println("Disconnected from server :( .");
             }
         });
