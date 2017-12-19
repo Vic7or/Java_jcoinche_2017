@@ -14,7 +14,7 @@ public class JcoincheServer {
         private static class GMHolder {
             private final static GameManager instance = new GameManager();
         }
-
+        private Arbiter arbitre = Arbiter.getInstance();
         public static GameManager getInstance() {
             return GMHolder.instance;
         }
@@ -28,9 +28,11 @@ public class JcoincheServer {
         }
     }
 
-    private static class JClient extends Connection {
-        public String   name;
-        public int      points;
+    public static class JClient extends Connection {
+        public String           name;
+        public Hand             hand;
+        public ArrayList<Card>  stock;
+        public int              points;
     }
     private final static Server         kryonet = new Server() {
         @Override

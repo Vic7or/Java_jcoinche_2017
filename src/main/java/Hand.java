@@ -6,6 +6,10 @@ public class Hand {
     Hand(ArrayList<Card> cards) {
         this.cards = cards;
     }
+
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
     public Card play(int index) { return (cards.remove(index));
     }
     public void show() {

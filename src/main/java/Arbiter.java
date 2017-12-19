@@ -61,8 +61,9 @@ public class Arbiter {
     public void setOverlord(Card.Color overlord) {
         Overlord = overlord;
     }
-    public boolean eval(Card lastStack, Card played)
+    public boolean eval(ArrayList<Card> stack, JcoincheServer.JClient currentPlayer, int played)
     {
+
         return true;
     }
 }
