@@ -9,7 +9,7 @@ public class Deck {
         createDeck();
     } // Constructeur
     private void createDeck() {
-        cardList = new ArrayList();
+        cardList = new ArrayList<Card>();
         cardList.add(new Card(Card.Color.CLUB, Card.Value.SEVEN));
         cardList.add(new Card(Card.Color.CLUB, Card.Value.EIGHT));
         cardList.add(new Card(Card.Color.CLUB, Card.Value.NINE));
@@ -50,10 +50,10 @@ public class Deck {
     }
     private ArrayList<Card>         cardList;
     public ArrayList<Hand>          distrib(){
-        ArrayList<Hand> hands = new ArrayList();
+        ArrayList<Hand> hands = new ArrayList<Hand>();
         while (hands.size() < 4)
         {
-            ArrayList<Card> draw = new ArrayList();
+            ArrayList<Card> draw = new ArrayList<Card>();
             while (draw.size() < 8)
                 draw.add(cardList.remove(0));
             hands.add(new Hand(draw));

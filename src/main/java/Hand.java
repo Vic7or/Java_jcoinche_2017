@@ -6,8 +6,7 @@ public class Hand {
     Hand(ArrayList<Card> cards) {
         this.cards = cards;
     }
-    public Card play(int index) {
-        return (cards.remove(index));
+    public Card play(int index) { return (cards.remove(index));
     }
     public void show() {
         Card card;
