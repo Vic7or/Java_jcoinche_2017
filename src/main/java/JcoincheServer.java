@@ -3,6 +3,7 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -15,6 +16,8 @@ public class JcoincheServer {
             private final static GameManager instance = new GameManager();
         }
         private Arbiter arbitre = Arbiter.getInstance();
+        private ArrayList<Card> stack = new ArrayList<Card>();
+        private Team[] teams = new Team[2];
         public static GameManager getInstance() {
             return GMHolder.instance;
         }
@@ -23,8 +26,11 @@ public class JcoincheServer {
         }
         @Override
         public void run(){
-
             System.out.println("GameManager is running.");
+            makeTeams();
+        }
+        private void makeTeams() {
+
         }
     }
 
