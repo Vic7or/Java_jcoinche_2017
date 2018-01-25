@@ -18,9 +18,9 @@ public class Card {
         QUEEN("QUEEN"),
         KING("KING"),
         ACE("ACE");
-        private String value;
+        public String type;
         Value(String id){
-            this.value = id;
+            this.type = id;
         }
     }
     private Color color;
