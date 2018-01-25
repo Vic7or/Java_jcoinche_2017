@@ -1,31 +1,27 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//base en singleton pour Arbiter (Victor)
 public class Arbiter {
-    private static class ArbiterHolder {
-        private final static Arbiter instance = new Arbiter();
-    }
-    private Card.Color Overlord = null;
-    private HashMap Atout = new HashMap<Card.Value, Integer>();
-    private HashMap SansAtout = new HashMap<Card.Value, Integer>();
-    private Arbiter() {
-        this.Atout.put(Card.Value.JACK, 20);
-        this.Atout.put(Card.Value.NINE, 14);
-        this.Atout.put(Card.Value.ACE, 11);
-        this.Atout.put(Card.Value.TEN, 10);
-        this.Atout.put(Card.Value.KING, 4);
-        this.Atout.put(Card.Value.QUEEN, 3);
-        this.Atout.put(Card.Value.EIGHT, 0);
-        this.Atout.put(Card.Value.SEVEN, 0);
-        this.SansAtout.put(Card.Value.ACE, 11);
-        this.SansAtout.put(Card.Value.TEN, 10);
-        this.SansAtout.put(Card.Value.KING, 4);
-        this.SansAtout.put(Card.Value.QUEEN, 3);
-        this.SansAtout.put(Card.Value.JACK, 2);
-        this.SansAtout.put(Card.Value.NINE, 0);
-        this.SansAtout.put(Card.Value.EIGHT, 0);
-        this.SansAtout.put(Card.Value.SEVEN, 0);
+    private Card.Color  Overlord = null;
+    private HashMap     Atout = new HashMap<Card.Value, Integer>();
+    private HashMap     SansAtout = new HashMap<Card.Value, Integer>();
+    Arbiter() {
+        Atout.put(Card.Value.JACK, 20);
+        Atout.put(Card.Value.NINE, 14);
+        Atout.put(Card.Value.ACE, 11);
+        Atout.put(Card.Value.TEN, 10);
+        Atout.put(Card.Value.KING, 4);
+        Atout.put(Card.Value.QUEEN, 3);
+        Atout.put(Card.Value.EIGHT, 0);
+        Atout.put(Card.Value.SEVEN, 0);
+        SansAtout.put(Card.Value.ACE, 11);
+        SansAtout.put(Card.Value.TEN, 10);
+        SansAtout.put(Card.Value.KING, 4);
+        SansAtout.put(Card.Value.QUEEN, 3);
+        SansAtout.put(Card.Value.JACK, 2);
+        SansAtout.put(Card.Value.NINE, 0);
+        SansAtout.put(Card.Value.EIGHT, 0);
+        SansAtout.put(Card.Value.SEVEN, 0);
     }
     private int getValueAtout(Card card){
         return (int) Atout.get(card.getValue());
@@ -52,16 +48,13 @@ public class Arbiter {
         }
         return false;
     }
-    public static Arbiter getInstance () {
-        return ArbiterHolder.instance;
-    }
     public Card.Color getOverlord() {
         return Overlord;
     }
     public void setOverlord(Card.Color overlord) {
         Overlord = overlord;
     }
-    public boolean eval(Card lastStack, Card played)
+    public boolean eval(ArrayList<Card> stack, JClient currentPlayer, int played)
     {
         return true;
     }

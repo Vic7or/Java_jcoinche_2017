@@ -1,13 +1,11 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
-// Base en singleton pour le deck (Giacomo et Bastien) a rajouter dans le game manager du server qd c'est fini.
 public class Deck {
-    private static class DeckHolder {
-        private final static Deck instance = new Deck();
-    }
-    private Deck() {
+    Deck() {
         createDeck();
     } // Constructeur
+    private ArrayList<Card>         cardList;
     private void createDeck() {
         cardList = new ArrayList<Card>();
         cardList.add(new Card(Card.Color.CLUB, Card.Value.SEVEN));
@@ -44,12 +42,7 @@ public class Deck {
         cardList.add(new Card(Card.Color.SPADE, Card.Value.ACE));
         Collections.shuffle(cardList);
     }
-    public static Deck getInstance() {
-        // Pour utiliser la classe :  Deck myDeck = Deck.getInstance();
-        return DeckHolder.instance;
-    }
-    private ArrayList<Card>         cardList;
-    public ArrayList<Hand>          distrib(){
+    public void          distrib(Team[] teams){
         ArrayList<Hand> hands = new ArrayList<Hand>();
         while (hands.size() < 4)
         {
@@ -58,10 +51,13 @@ public class Deck {
                 draw.add(cardList.remove(0));
             hands.add(new Hand(draw));
         }
-        return hands;
+        teams[0].getFirst().hand = hands.get(0);
+        teams[0].getSecond().hand = hands.get(1);
+        teams[1].getFirst().hand = hands.get(2);
+        teams[1].getSecond().hand = hands.get(3);
+        return;
     }
     public void reset (){
         createDeck();
     }
-    // A feed avec une classe Card , liste de Card, méthodes pour distribuer etc...
 }

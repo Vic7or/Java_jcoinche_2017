@@ -22,4 +22,3 @@ public class Packet {
         return this.type.getWhat();
     }
 }
-

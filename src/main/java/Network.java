@@ -37,4 +37,5 @@ public class Network {
         kryo.register(Protocol.class);
         kryo.register(Packet.class);
     }
+
 }

@@ -7,35 +7,29 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class JcoincheClient {
-    private static class ClientHolder {
-        private final static JcoincheClient instance = new JcoincheClient();
-    }
-    final static Client         kryonet = new Client();
-    private static String       name;
-    public static JcoincheClient getInstance() {
-        return ClientHolder.instance;
-    }
-    private JcoincheClient() {
-        this.name = null;
+    private Client      kryonet = new Client();
+    private String      name;
+    JcoincheClient() {
+        name = null;
         System.out.println("JcoincheClient instantiated.");
     }
     private void registerPlayer() throws IOException {
         BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
         String s;
-        while (JcoincheClient.name == null)
+        while (name == null)
         {
             System.out.println("Welcome to Jcoinche, please type your player name:");
             if ((s = rd.readLine()) != null && s.length() != 0)
-                JcoincheClient.name = s;
+                name = s;
         }
     };
     public void run() throws IOException {
-        JcoincheClient.kryonet.start();
-        Network.register(JcoincheClient.kryonet);
-        JcoincheClient.kryonet.addListener(new Listener(){
+        kryonet.start();
+        Network.register(kryonet);
+        kryonet.addListener(new Listener(){
             @Override
             public void connected(Connection connection) {
-                JcoincheClient.kryonet.sendTCP(new String("hello server !"));
+                kryonet.sendTCP(new String("hello server !"));
             }
             @Override
             public void received(Connection connection, Object object) {
@@ -49,7 +43,7 @@ public class JcoincheClient {
                     switch (packet.getType())
                     {
                         case ASKNAME:
-                            JcoincheClient.kryonet.sendTCP(new Packet(Network.Protocol.NAME, JcoincheClient.name));
+                            kryonet.sendTCP(new Packet(Network.Protocol.NAME, name));
                             break;
                         case WAITFORPLAYERS:
                             System.out.println(packet.getTypeWhat() + packet.getData());
@@ -81,7 +75,7 @@ public class JcoincheClient {
             }
             @Override
             public void disconnected(Connection connection){
-                JcoincheClient.kryonet.stop();
+                kryonet.stop();
                 System.out.println("Disconnected from server :( .");
             }
         });
@@ -91,13 +85,13 @@ public class JcoincheClient {
 
         registerPlayer();
         System.out.println("Connecting to Jcoinche server...");
-        JcoincheClient.kryonet.connect(5000, Network.ServerIP, Network.ServerPort);
+        kryonet.connect(5000, Network.ServerIP, Network.ServerPort);
 
         while ((s = rd.readLine()) != null && s.length() != 0)
         {
-            JcoincheClient.kryonet.sendTCP(s);
+            kryonet.sendTCP(s);
         }
-        JcoincheClient.kryonet.stop();
+        kryonet.stop();
     }
 
 }
