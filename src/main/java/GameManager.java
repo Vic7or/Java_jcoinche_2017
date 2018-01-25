@@ -6,6 +6,7 @@ public class GameManager extends Thread {
     private ArrayList<Card> stack = new ArrayList<Card>();
     private Team[]          teams = new Team[2];
     private Deck            deck = new Deck();
+    private boolean         alive = true;
     private JcoincheServer  server;
     GameManager(JcoincheServer Server) {
         server = Server;
